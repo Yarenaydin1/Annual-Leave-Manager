@@ -20,7 +20,7 @@ function App() {
     ]);
   };
 
-  //  silme fonksiyonu
+
   const deleteWorker = (id) => {
     setWorkers((prevWorkers) => prevWorkers.filter(worker => worker.id !== id));
   };
@@ -28,9 +28,9 @@ function App() {
   return (
     <div className="App">
       <h1 className="text-white text-center mt-6 text-xl">Annual Leave Manager</h1>
-      {/* AddWorker bileşenine onAddWorker props olarak geçilir */}
+    
       <AddWorker onAddWorker={onAddWorker} />
-      {/* WorkerList bileşenine işçi listesi ve onDeleteWorker props olarak geçilir */}
+    
       <WorkerList workers={workers} onDeleteWorker={deleteWorker} />
     </div>
   );

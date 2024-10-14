@@ -25,7 +25,7 @@ const WorkerList = ({ workers, onDeleteWorker }) => {
                   className="text-red-500"
                   onClick={() => {
                     if (window.confirm("Are you sure you want to delete this worker?")) {
-                      onDeleteWorker(worker.id); // DELETE
+                      onDeleteWorker(worker.id); 
                     }
                   }}
                 >

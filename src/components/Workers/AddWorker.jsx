@@ -1,6 +1,7 @@
 import Card from "../UI/Card";
 import Button from "../UI/Button";
 import { useState } from "react";
+import Modal from "../UI/Modal";
 
 const AddWorker = ({ onAddWorker }) => {
   const [formData, setFormData] = useState({
@@ -8,6 +9,9 @@ const AddWorker = ({ onAddWorker }) => {
     vacationDays: '',
     usedDays: '',
   });
+
+  const [showModal, setShowModal] = useState(false);
+  const [missingFields, setMissingFields] = useState([]);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -17,9 +21,25 @@ const AddWorker = ({ onAddWorker }) => {
     }));
   };
 
+  const validateForm = () => {
+    const emptyFields = [];
+    if (!formData.name.trim()) emptyFields.push("Worker's Full Name");
+    if (!formData.vacationDays.trim()) emptyFields.push("Total Vacation Days");
+    if (!formData.usedDays.trim()) emptyFields.push("Used Leave Days");
+    
+    if (emptyFields.length > 0) {
+      setMissingFields(emptyFields);
+      setShowModal(true);
+      return false; 
+    }
+    return true; 
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    onAddWorker(formData); // İşçiyi ekleme fonksiyonu
+    if (!validateForm()) return;
+
+    onAddWorker(formData);
     setFormData({
       name: '',
       vacationDays: '',
@@ -59,6 +79,13 @@ const AddWorker = ({ onAddWorker }) => {
         />
         <Button className="mt-2">Add</Button>
       </form>
+
+      {showModal && (
+        <Modal 
+          onClose={() => setShowModal(false)} 
+          missingFields={missingFields} 
+        />
+      )}
     </Card>
   );
 };
